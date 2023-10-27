@@ -2,7 +2,7 @@
 
 This is a simple 2D platformer game built using Unity. The game features a player character that can move left and right, jump, and collect coins while avoiding obstacles.
 
-![Screenshot](screen.png)
+![Screenshot](screenshots/screen.png)
 
 ## Getting Started
 
