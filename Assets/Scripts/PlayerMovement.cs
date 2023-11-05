@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
   private Animator anim;
   private SpriteRenderer sprite;
   private enum MovementState {idle, running, jumping, falling}
+
+  [SerializeField] private AudioSource jumpSoundEffect;
   private float dirX = 0f;
   [SerializeField] private LayerMask jumpableGround;
   [SerializeField] private float moveSpeed = 7f;
@@ -30,17 +31,27 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
   private void Update()
   {
-    dirX = Input.GetAxis("Horizontal");
+    dirX = SimpleInput.GetAxis("Horizontal");
     rb.velocity = new UnityEngine.Vector2(dirX * moveSpeed, rb.velocity.y);
 
     if(Input.GetButtonDown("Jump") && IsGrounded() == true)
     {
+      jumpSoundEffect.Play();
       rb.velocity = new UnityEngine.Vector2(rb.velocity.x, jumpForce);
     }
 
     UpdateAnimationState();
 
       
+  }
+
+  public void Jump()
+  {
+     if(IsGrounded() == true)
+    {
+      jumpSoundEffect.Play();
+      rb.velocity = new UnityEngine.Vector2(rb.velocity.x, jumpForce);
+    }
   }
 
   private void UpdateAnimationState()
